@@ -1,0 +1,36 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+    <title>Messenger</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <body style="height: 100vh;"></body>
+    <div class="sticky">
+        <div class="w3-row w3-bar w3-teal" style="display: block;">
+            {% block navbar-items %}
+            {% if user.is_authenticated %}
+            <a class="w3-button w3-right" href="{% url 'logout' %}?next=/"><b>Вийти</b></a>
+            {% else %}
+            <a class="w3-button w3-right" href="{% url 'main:signup' %}"><b>Реєстрація</b></a>
+            <a class="w3-button w3-right" href="{% url 'login' %}"><b>Вхід</b></a>
+            {% endif %}
+            {% endblock navbar-items%}
+        </div>
+    </div>
+    
+    <div class="w3-row">
+        {% block sidebar %}
+        {% endblock %}
+    
+        {% block with-content %}
+        {% endblock %}
+    </div>
+    {% block footer %}
+    <br>
+    {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block with-content %}
+<div class="w3-content">
+    <h1 class="w3-center">Вхід</h1>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+        <div>{{ field.label_tag }}</div>
+        <div>{{ field }}</div>
+        <div>{{ field.errors }}</div>
+        </p>
+        {% endfor %}
+
+        <button type="submit" class="w3-white w3-border w3-border-black">Увійти</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    <p><a href="{% url 'password_reset' %}">Забули пароль?</a></p>
+
+    {% if form.errors %}
+    <p>Неправильне ім'я користувача або пароль. Будь ласка, спробуйте ще раз.</p>
+    {% endif %}
+
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p>Відмовлено в доступі до сторінки. Щоб побачити її, увійдіть з-під облікового запису, що має доступ.</p>
+    {% else %}
+    <p>Щоб продовжити, увійдіть в обліковий запис.</p>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
